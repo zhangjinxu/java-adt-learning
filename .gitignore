@@ -1,0 +1,7 @@
+*.log
+*.out
+*.iml
+.idea
+logs
+target
+log
