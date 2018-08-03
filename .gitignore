@@ -1,7 +1,9 @@
 *.log
 *.out
 *.iml
-.idea
-logs
-target
-log
+/logs/
+/target/
+/log/
+/.gitignore
+/.idea/
+/test/
