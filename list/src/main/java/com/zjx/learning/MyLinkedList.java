@@ -15,21 +15,23 @@ public class MyLinkedList<T> implements Iterable<T>,List<T> {
 
     private class Node{
 
-        Object data;
+        T data;
 
         Node next;
 
         Node previous;
 
+        Node() {}
+
+        Node(T data, Node next, Node previous) {
+            this.data = data;
+            this.next = next;
+            this.previous = previous;
+        }
     }
 
     public MyLinkedList() {
-        size = 0;
-        head = new Node();
-        tail = new Node();
-
-        head.next = tail;
-        tail.previous = head;
+        clear();
     }
 
     @Override
@@ -44,6 +46,9 @@ public class MyLinkedList<T> implements Iterable<T>,List<T> {
 
     @Override
     public boolean contains(Object o) {
+        if (indexOf(o) != -1) {
+            return true;
+        }
         return false;
     }
 
@@ -95,7 +100,12 @@ public class MyLinkedList<T> implements Iterable<T>,List<T> {
 
     @Override
     public void clear() {
+        size = 0;
+        head = new Node();
+        tail = new Node();
 
+        head.next = tail;
+        tail.previous = head;
     }
 
     @Override
@@ -109,7 +119,15 @@ public class MyLinkedList<T> implements Iterable<T>,List<T> {
             node = getNodeFromTail(index);
         }
 
-        return (T) node.data;
+        return node.data;
+    }
+
+    private Node getNode(int index) {
+        checkIndex(index);
+        if (index < size / 2) {
+            return getNodeFromHead(index);
+        }
+        return getNodeFromTail(index);
     }
 
     private Node getNodeFromHead(int index) {
@@ -139,11 +157,9 @@ public class MyLinkedList<T> implements Iterable<T>,List<T> {
     public T set(int index, T element) {
         checkIndex(index);
 
-        Node node = head.next;
+        Node node = null;
 
-        for (int i = 0; i <= index; i++) {
-            node = node.next;
-        }
+        node = getNode(index);
 
         node.data = element;
 
@@ -158,34 +174,59 @@ public class MyLinkedList<T> implements Iterable<T>,List<T> {
 
     @Override
     public void add(int index, T element) {
-        checkIndex(index);
+
+        Node node = getNode(index);
 
         Node newNode = new Node();
         newNode.data = element;
 
-        if (index < size/2) {
-            Node node = getNodeFromHead(index);
 
-            newNode.next = node;
-            newNode.previous = node.previous;
+        newNode.next = node;
+        newNode.previous = node.previous;
 
-            node.previous.next = newNode;
-            node.previous = newNode;
+        node.previous.next = newNode;
+        node.previous = newNode;
 
-        }else if(index>size/2&&index<size){
-            tail.previous.next = newNode;
-            tail.previous = newNode;
-        }
     }
 
     @Override
     public T remove(int index) {
-        return null;
+
+        Node node = getNode(index);
+
+        node.previous.next = node.next;
+        node.next.previous = node.previous;
+
+        return node.data;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+
+        if (size == 0) {
+            return -1;
+        }
+
+        Node node = head;
+
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                node = node.next;
+                if (node.data == null) {
+                    return i;
+                }
+            }
+        }else{
+            for (int i = 0; i < size; i++) {
+                node = node.next;
+                if (o.equals(node.data)) {
+                    return i;
+                }
+            }
+        }
+
+
+        return -1;
     }
 
     @Override
