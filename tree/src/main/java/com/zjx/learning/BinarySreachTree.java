@@ -1,10 +1,10 @@
 package com.zjx.learning;
 
-public class BinarySreachTree<T extends Comparable<? super T>> {
+public class BinarySearchTree<T extends Comparable<? super T>> {
 
     private BinaryNode<T> root;
 
-    public BinarySreachTree() {
+    public BinarySearchTree() {
         root = null;
     }
 
