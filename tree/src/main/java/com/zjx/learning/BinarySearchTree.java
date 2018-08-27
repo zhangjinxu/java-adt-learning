@@ -22,6 +22,36 @@ public class BinarySearchTree<T extends Comparable<? super T>> {
         root = insert(data, root);
     }
 
+    public void remove(T data) {
+        root = remove(data, root);
+    }
+
+    private BinaryNode<T> remove(T data, BinaryNode<T> node) {
+
+        if (node == null) {
+            return null;
+        }
+
+        int compareResult = data.compareTo(node.data);
+
+        if (compareResult < 0) {
+            node.left = remove(data, node.left);
+        } else if (compareResult > 0) {
+            node.right = remove(data, node.right);
+        } else if (node.left != null && node.right != null) {//有两个儿子
+
+            BinaryNode<T> min = getMin(node.right);//找到右子树最小节点
+            node.right = remove(min.data, node.right);
+
+
+        } else {//有一个儿子
+            node = (node.left != null) ? node.left : node.right;
+        }
+        return node;
+
+
+    }
+
     private BinaryNode<T> insert(T data, BinaryNode<T> node) {
 
         if (node == null) {
