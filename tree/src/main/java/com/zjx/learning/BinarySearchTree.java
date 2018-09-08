@@ -1,10 +1,82 @@
 package com.zjx.learning;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class BinarySearchTree<T extends Comparable<? super T>> {
 
     private BinaryNode<T> root;
 
-    public BinarySearchTree() {}
+
+
+    public List<BinaryNode<T>> levelIterator() {
+        return levelIterator(root);
+
+    }
+
+    private List<BinaryNode<T>> levelIterator(BinaryNode<T> node) {
+
+        List<BinaryNode<T>> result = new ArrayList<>();
+
+        if (node == null) {
+            return result;
+        }
+
+        Queue<BinaryNode<T>> q = new LinkedList<>();
+
+        q.offer(node);
+
+        while (!q.isEmpty()) {
+
+            BinaryNode<T> current = q.remove();
+
+            result.add(current);
+
+            if (current.left != null) {
+                q.offer(current.left);
+            }
+            if (current.right != null) {
+                q.offer(current.right);
+            }
+
+        }
+        return result;
+    }
+
+    public void printTree() {
+        if (isEmpty()) {
+            System.out.println("empty tree");
+        }
+        printTree(root);
+    }
+
+    private void printTree(BinaryNode<T> node) {
+        if (node != null) {
+            printTree(node.left);
+            System.out.println(node.data);
+            printTree(node.right);
+        }
+    }
+
+    private void printTreeFirst(BinaryNode<T> node) {
+        if (node != null) {
+            System.out.println(node.data);
+            printTreeFirst(node.left);
+            printTreeFirst(node.right);
+        }
+    }
+
+    private void printTreeAfter(BinaryNode<T> node) {
+        if (node != null) {
+
+        }
+    }
+
+    public boolean isEmpty() {
+        return root == null;
+    }
 
     public boolean contains(T data) {
         return contains(data, root);
