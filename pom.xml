@@ -11,6 +11,7 @@
     <modules>
         <module>list</module>
         <module>tree</module>
+        <module>other</module>
     </modules>
 
 
