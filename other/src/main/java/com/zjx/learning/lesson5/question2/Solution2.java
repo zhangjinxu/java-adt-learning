@@ -43,7 +43,7 @@ public class Solution2 {
         for (int i = 0; i < P.length; i++) {
             int start = P[i];
             int end = Q[i];
-
+            System.out.println();
             if (start == end) {
                 char currentChar = s.charAt(start);
                 Integer integer = map.get(currentChar);
