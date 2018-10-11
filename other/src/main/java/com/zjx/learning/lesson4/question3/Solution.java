@@ -1,4 +1,4 @@
-package com.zjx.learning;
+package com.zjx.learning.lesson4.question3;
 
 import org.junit.Test;
 
